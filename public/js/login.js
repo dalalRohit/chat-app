@@ -3,6 +3,7 @@ const usernameInput = document.querySelector('#username');
 const error = document.querySelector('.error');
 error.style.display = 'none';
 
+
 function handleForm(e) {
     e.preventDefault();
     var username = usernameInput.value;

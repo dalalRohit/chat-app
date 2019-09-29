@@ -107,4 +107,4 @@ router.get('/getData', (req, res) => {
   res.send('DATA');
 })
 
-module.exports = router;
+module.exports = { indexRouter: router, getConnectedUsers, ref };

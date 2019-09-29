@@ -3,8 +3,9 @@ const socket = io();
 //Components
 const msgButton = document.querySelector('#msgBtn');
 const msgForm = document.querySelector('.msgForm');
-const msgInput = document.querySelector('#message');
-const messages = document.querySelector('.messages');
+const msgInput = document.querySelector('#messageInput');
+const messages = document.querySelector('.main-messages');
+const userList = document.querySelector('.users');
 
 //Template
 const msgTemp = document.querySelector('#msgTemp').innerHTML;
@@ -21,6 +22,13 @@ socket.on('MESSAGE', (msg) => {
     messages.insertAdjacentHTML('beforeend', html);
 })
 
+//UPDATE USERNAMES
+socket.on('UPDATE_USERS', (usernames) => {
+    console.log('UPDATE_USERNAMES', usernames);
+    usernames.map((user) => {
+        $('.users').append(`<li>${user}</li>`)
+    })
+})
 
 function handleMessageForm(e) {
     e.preventDefault();
@@ -32,7 +40,7 @@ function handleMessageForm(e) {
     }
     const data = {
         text,
-        sender: localStorage.getItem('name')
+        sender: localStorage.getItem('name'),
     }
     socket.emit('NEW_MSG', data, () => {
         console.log('The message was delivered!')

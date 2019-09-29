@@ -6,7 +6,7 @@
 
     <div class="sidebar">
         <h4>Users</h4>
-        <i class="fa fa-sign-out fa-2x logout" onclick="logout()" title="Logout" aria-hidden="true"></i>
+        <!-- <i class="fa fa-sign-out fa-2x logout" onclick="logout()" title="Logout" aria-hidden="true"></i> -->
         <ul class="users">
 
         </ul>
@@ -16,15 +16,18 @@
 
         <div class="messages">
             <div class="msgHeader">
-                <h5 class="msgHeader">Messages</h5>
+                <h5>Messages</h5>
                 <i class="fa fa-sign-out fa-2x logout" onclick="logout()" title="Logout" aria-hidden="true"></i>
+            </div>
+            <div class="main-messages">
+
             </div>
         </div>
 
         <div>
             <form class="msgForm" onsubmit="handleMessageForm(event)">
                 <div class="form-group ">
-                    <input type="text" autocomplete="off" class="form-control" id="message"
+                    <input type="text" autocomplete="off" class="form-control" id="messageInput"
                         placeholder="Enter message..">
                 </div>
                 <div>
@@ -38,10 +41,10 @@
 </div>
 
 <script id="msgTemp" type="text/html">
-    <div id="message">
-        <p>
+    <div id="message" class={{msg.float}}>
+        <p class="msg_meta">
             <span class="msg_name">{{msg.sender}}</span>
-            <span class="msg_meta" > {{msg.createdAt}}</span>
+            <span class="msg_time" > {{msg.createdAt}}</span>
         </p>
         <p>
             {{msg.text}}

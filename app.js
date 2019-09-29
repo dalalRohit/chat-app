@@ -1,6 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
-const helmet = require('helmet')
+// const helmet = require('helmet')
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser')
@@ -9,7 +9,7 @@ var expressLayouts = require('express-ejs-layouts');
 var axios = require('axios');
 var { createMsg, getUserBySocketId } = require('./utils/functions');
 
-var indexRouter = require('./routes/index');
+var { indexRouter, getConnectedUsers, ref } = require('./routes/index');
 
 var app = express();
 // parse application/x-www-form-urlencoded
@@ -26,7 +26,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 
-app.use(helmet())
+// app.use(helmet())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -56,25 +56,42 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
+
 io.on('connection', (socket) => {
   console.log('New WebSocket connection! ', socket.id);
 
   socket.emit('MESSAGE', createMsg('Welcome to ChatApp!', 'Admin'));
 
-  socket.on('USER_CONNECTED', (user) => {
+  socket.on('USER_CONNECTED', async (user) => {
+    let users = await getConnectedUsers();
+    let usernames = Object.keys(users);
+    io.emit('UPDATE_USERS', usernames);
     socket.broadcast.emit('MESSAGE', createMsg(`${user.name} has joined the chat!`, 'Admin'));
   })
 
   socket.on('NEW_MSG', (msg, callback) => {
-    const message = createMsg(msg.text, msg.sender);
+    let message = createMsg(msg.text, msg.sender);
+    // message['float'] = 09;
+    //if getUserBySocketId()===msg.sender
     io.emit('MESSAGE', message);
 
     callback();
   })
 
-  socket.on('disconnect', () => {
+  socket.on('disconnect', async () => {
+    let users = await getConnectedUsers();
+    // Object.keys(users)
+    //   .map((user) => {
+    //     if (users[user].socketId === socket.id) {
+    //       console.log(user.name);
+    //       // io.emit('MESSAGE', createMsg(`${user.name} has left the chat!`, 'Admin'))
+    //       delete users[user];
+    //     }
+    //   })
+    // console.log('After refresh/ctrl+w', users);
+    // ref.set(users);
+    io.emit('MESSAGE', createMsg(`user has left the chat!`, 'Admin'))
 
-    io.emit('MESSAGE', createMsg('A user has left!', 'Admin'))
   })
 })
 

@@ -1,0 +1,54 @@
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link rel="stylesheet" href="./../public/css/style.css">
+
+<div class="chat">
+
+    <div class="sidebar">
+        <h4>Users</h4>
+        <i class="fa fa-sign-out fa-2x logout" onclick="logout()" title="Logout" aria-hidden="true"></i>
+        <ul class="users">
+
+        </ul>
+    </div>
+
+    <div class="main">
+
+        <div class="messages">
+            <div class="msgHeader">
+                <h5 class="msgHeader">Messages</h5>
+                <i class="fa fa-sign-out fa-2x logout" onclick="logout()" title="Logout" aria-hidden="true"></i>
+            </div>
+        </div>
+
+        <div>
+            <form class="msgForm" onsubmit="handleMessageForm(event)">
+                <div class="form-group ">
+                    <input type="text" autocomplete="off" class="form-control" id="message"
+                        placeholder="Enter message..">
+                </div>
+                <div>
+                    <button type="button" id="msgBtn" name="msgBtn" onclick="handleMessageForm(event)"
+                        class="btn btn-secondary">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<script id="msgTemp" type="text/html">
+    <div id="message">
+        <p>
+            <span class="msg_name">{{msg.sender}}</span>
+            <span class="msg_meta" > {{msg.createdAt}}</span>
+        </p>
+        <p>
+            {{msg.text}}
+        </p>
+    </div>
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/javascript-obfuscator/dist/index.browser.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="./../public/js/chat.js"></script>

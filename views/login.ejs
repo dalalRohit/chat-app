@@ -1,0 +1,15 @@
+<div class="login">
+    <form class="loginForm" onsubmit="handleForm(event);">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" autocomplete="off" autofocus class="form-control" id="username"
+                placeholder="Enter username.." name="username" required>
+            <small id="usernameHelp" class="form-text text-muted">We'll never share your username with anyone
+                else.</small>
+            <p class="alert alert-danger error"></p>
+        </div>
+        <button type="button" onclick="handleForm(event);" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="./../public/js/login.js"></script>

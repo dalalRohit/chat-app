@@ -1,0 +1,25 @@
+{
+  "name": "chat",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon ./bin/www",
+    "start": "nodem ./bin/www"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "express": "~4.16.0",
+    "express-ejs-layouts": "^2.5.0",
+    "firebase-admin": "^8.6.0",
+    "helmet": "^3.21.1",
+    "http-errors": "~1.6.2",
+    "moment": "^2.24.0",
+    "morgan": "~1.9.0",
+    "socket.io": "^2.3.0",
+    "uuid": "^3.3.3"
+  }
+}

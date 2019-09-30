@@ -1,5 +1,4 @@
 const uuid = require('uuid/v4');
-// const moment = require('moment');
 var moment = require('moment-timezone');
 
 const createUser = function (name, socketId) {
@@ -37,10 +36,5 @@ const verifyUser = (list, newUser) => {
     return false;
 }
 
-// const 
-const getUserBySocketId = (list, id) => {
 
-}
-
-
-module.exports = { createUser, createMsg, addUser, verifyUser, getUserBySocketId } 
+module.exports = { createUser, createMsg, addUser, verifyUser } 

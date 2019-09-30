@@ -21,12 +21,6 @@ const getConnectedUsers = async () => {
   return users;
 }
 
-const getAllMessages = async () => {
-  let snapshot = await msgRef.once('value');
-  let messages = snapshot.val();
-  return messages;
-}
-
 //to load FIREBASE database with admin user
 const loadDatabase = () => {
   const admin = {
@@ -40,41 +34,7 @@ const loadDatabase = () => {
   }
   ref.set(admin);
 }
-const loadMessages = () => {
-  var msgs =
-  {
-    admin_admin: [
-      {
-        id: uuid(),
-        username: 'admin',
-        text: "Hello,I'm the Admin of this app!",
-        sent: moment().format('lll')
-      },
-      {
-        id: uuid(),
-        username: 'admin',
-        text: "Hello,I'm the Admin of this app![2]",
-        sent: moment().format('lll')
-      }
-    ],
-    rohit_dalal: [
-      {
-        id: uuid(),
-        username: 'rohit',
-        text: "Hello,I'm the rohit of this app!",
-        sent: moment().format('lll')
-      },
-      {
-        id: uuid(),
-        username: 'rohit',
-        text: "Hello,I'm the rohit of this app![2]",
-        sent: moment().format('lll')
-      }
-    ]
-  }
 
-  msgRef.set(msgs);
-}
 //to remove all users from FIREBASE except admin
 const emptyDatabase = () => {
   ref.remove()
@@ -84,7 +44,6 @@ const emptyDatabase = () => {
 
 // loadDatabase();
 // emptyDatabase();
-// loadMessages();
 
 // ***************** FIREBASE => END ******************************
 
@@ -95,12 +54,15 @@ router.get('/', function (req, res, next) {
   });
 });
 
+//GET /chat [Chat page {protected}]
 router.get('/chat', (req, res, next) => {
   res.render('chat', {
     pageTitle: 'ChatApp | Chat'
   })
 })
 
+
+//verify user sent via login form
 router.post('/verify', async (req, res) => {
   let connectedUsers = await getConnectedUsers();
 
@@ -126,8 +88,7 @@ router.post('/verify', async (req, res) => {
 
 })
 
-
-
+//Logout user
 router.post('/logout', async (req, res) => {
   let x = await getConnectedUsers();
   let loggedUser = req.body.name;
@@ -147,8 +108,5 @@ router.post('/logout', async (req, res) => {
 module.exports = {
   indexRouter: router,
   getConnectedUsers,
-  getAllMessages,
-  ref,
-  msgRef,
-  database
+  ref
 };

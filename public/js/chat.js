@@ -9,37 +9,37 @@ const userList = document.querySelector('.users');
 
 //Template
 const msgTemp = document.querySelector('#msgTemp').innerHTML;
-const usersTemp = document.querySelector('#usersTemp').innerHTML;
+// const usersTemp = document.querySelector('#usersTemp').innerHTML;
 
 if (localStorage.getItem('name') === null) {
     alert('No user logged in. Please login to use ChatApp');
     window.location = '/'
 }
 else {
-    const autoScroll = () => {
-        //new msg elem
-        const newMsg = messages.lastElementChild;
-        // console.log(newMsg);
+    // const autoScroll = () => {
+    //     //new msg elem
+    //     const newMsg = messages.lastElementChild;
+    //     // console.log(newMsg);
 
-        //height of newMsg
-        const newMsgStyles = getComputedStyle(newMsg);
-        const newMsgMargin = parseInt(newMsgStyles.marginBottom);
-        const newMsgHeight = newMsg.offsetHeight + newMsgMargin
+    //     //height of newMsg
+    //     const newMsgStyles = getComputedStyle(newMsg);
+    //     const newMsgMargin = parseInt(newMsgStyles.marginBottom);
+    //     const newMsgHeight = newMsg.offsetHeight + newMsgMargin
 
-        //visible height
-        const visibleHeight = messages.offsetHeight;
+    //     //visible height
+    //     const visibleHeight = messages.offsetHeight;
 
-        //height of messages
-        const contentHeight = messages.scrollHeight;
-        console.log(visibleHeight, contentHeight);
+    //     //height of messages
+    //     const contentHeight = messages.scrollHeight;
+    //     console.log(visibleHeight, contentHeight);
 
-        //how far i've scrolled
-        const scrollOffset = messages.scrollTop + visibleHeight;
+    //     //how far i've scrolled
+    //     const scrollOffset = messages.scrollTop + visibleHeight;
 
-        if (contentHeight - newMsgHeight <= scrollOffset) {
-            messages.scrollTop = messages.scrollHeight;
-        }
-    }
+    //     if (contentHeight - newMsgHeight <= scrollOffset) {
+    //         messages.scrollTop = messages.scrollHeight;
+    //     }
+    // }
 
     //WELCOME MESSAGE
     socket.on('GREET_MSG', (msg) => {
@@ -50,7 +50,6 @@ else {
     socket.on('MESSAGE', (msg) => {
         const html = Mustache.render(msgTemp, { msg });
         messages.insertAdjacentHTML('beforeend', html);
-        autoScroll();
     })
 
 

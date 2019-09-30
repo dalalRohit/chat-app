@@ -1,15 +1,14 @@
 var createError = require('http-errors');
 var express = require('express');
-// const helmet = require('helmet')
+const helmet = require('helmet')
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser')
 var logger = require('morgan');
 var expressLayouts = require('express-ejs-layouts');
-var axios = require('axios');
-var { createMsg, getUserBySocketId } = require('./utils/functions');
+var { createMsg } = require('./utils/functions');
 
-var { indexRouter, getConnectedUsers, msgRef, getAllMessages, database } = require('./routes/index');
+var { indexRouter, msgRef } = require('./routes/index');
 
 var app = express();
 // parse application/x-www-form-urlencoded
@@ -26,7 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 
-// app.use(helmet())
+app.use(helmet())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -68,36 +67,16 @@ io.on('connection', (socket) => {
 
   socket.on('NEW_MSG', async (msg, callback) => {
     let message = createMsg(msg.text, msg.sender);
-    // console.log(message);
-    // let messages = await getAllMessages();
-    // let users = await getConnectedUsers();
-    // let usernames = Object.keys(messages).map((user) => user);
-    // // database.ref(`/messages/rohit`)
-    // //   .push({
-    // //     id: 'asdjoisaidnlkan',
-    // //     username: 'ashish',
-    // //     text: "Hello,I'm the ashish of this app![2]",
-    // //     sent: 'asdnasdlkda'
-    // //   })
-    // usernames.map((user) => {
-    //   if (user === msg.sender) {
-    //     database.ref(`/messages/${user}`)
-    //       .push(message)
-    //   }
-    // })
-
     io.emit('MESSAGE', message);
-
     callback();
   })
 
 
   socket.on('disconnect', async () => {
-    // let users = await getConnectedUsers();
+    console.log(`Client ${socket.id} disconnected!`)
   })
 
 
 })
-
 
 module.exports = { app, server, io };

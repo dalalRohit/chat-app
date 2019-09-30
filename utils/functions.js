@@ -21,7 +21,7 @@ const createMsg = (msg, sender) => {
     return {
         text: msg,
         sender,
-        createdAt: moment().format('LT'),
+        createdAt: moment().tz('Asia/Kolkata').format('lll'),
     }
 }
 const verifyUser = (list, newUser) => {

@@ -26,14 +26,17 @@
 
         <div>
             <form class="msgForm" onsubmit="handleMessageForm(event)">
-                <div class="form-group ">
-                    <input type="text" autocomplete="off" class="form-control" id="messageInput"
-                        placeholder="Enter message..">
+                <div class="inputs">
+                    <div class="form-group ">
+                        <input type="text" autocomplete="off" class="form-control" id="messageInput"
+                            placeholder="Enter message..">
+                    </div>
+                    <div>
+                        <button type="button" id="msgBtn" name="msgBtn" onclick="handleMessageForm(event)"
+                            class="btn btn-primary">Send</button>
+                    </div>
                 </div>
-                <div>
-                    <button type="button" id="msgBtn" name="msgBtn" onclick="handleMessageForm(event)"
-                        class="btn btn-secondary">Send</button>
-                </div>
+
             </form>
         </div>
     </div>

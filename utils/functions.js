@@ -1,12 +1,13 @@
 const uuid = require('uuid/v4');
-const moment = require('moment');
+// const moment = require('moment');
+var moment = require('moment-timezone');
 
 const createUser = function (name, socketId) {
     return {
         id: uuid(),
         socketId,
         name: name.trim().toLowerCase(),
-        time: moment().format('lll')
+        time: moment().tz('Asia/Kolkata').format('lll')
     }
 
 }

@@ -1,4 +1,17 @@
 <div class="login">
+    <div class="intro">
+        <h2>Welcome to my ChatApp</h2>
+        <ul>
+            <li>
+                <i class="fa fa-paper-plane fa-1x" aria-hidden="true"></i>
+                Enter usename in <code>[name_username]</code> format
+            </li>
+            <li>
+                <i class="fa fa-paper-plane fa-1x" aria-hidden="true"></i>
+                Start chatting with connected users!
+            </li>
+        </ul>
+    </div>
     <form class="loginForm" onsubmit="handleForm(event);">
         <div class="form-group">
             <label for="username">Username <small>[name_username]</small></label>
@@ -11,5 +24,7 @@
         <button type="button" onclick="handleForm(event);" class="btn btn-primary">Submit</button>
     </form>
 </div>
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <script src="/socket.io/socket.io.js"></script>
 <script src="./../public/js/login.js"></script>

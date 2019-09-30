@@ -65,8 +65,9 @@ io.on('connection', (socket) => {
   socket.on('USER_CONNECTED', async (user) => {
     let users = await getConnectedUsers();
     let usernames = Object.keys(users);
-    io.emit('UPDATE_USERS', usernames);
     socket.broadcast.emit('MESSAGE', createMsg(`${user.name} has joined the chat!`, 'Admin'));
+    io.emit('UPDATE_USERS', usernames);
+
   })
 
   socket.on('NEW_MSG', (msg, callback) => {

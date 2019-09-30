@@ -22,6 +22,13 @@ Node.js[Express.js]
 Bootstrap
 Firebase database
 ```
+## Functionalities
+1.User authentication [Basic level] <br/>
+2.Message when new user joins the chat <br/>
+3.Basic PWA support <br/>
+4.User storage in firebase <br/>
+5.Highly responsive <br/>
+
 
 ## Authors
 >[Rohit Dalal](https://www.linkedin.com/in/rohit-dalal-61330116b/)

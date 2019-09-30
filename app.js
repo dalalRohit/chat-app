@@ -91,7 +91,7 @@ io.on('connection', (socket) => {
     //   })
     // console.log('After refresh/ctrl+w', users);
     // ref.set(users);
-    io.emit('MESSAGE', createMsg(`user has left the chat!`, 'Admin'))
+    // io.emit('MESSAGE', createMsg(`user has left the chat!`, 'Admin'))
 
   })
 })

@@ -70,7 +70,7 @@ body {
 }
 
 .main{
-  width: 80%;
+  width: 100%;
   max-width: 100%;
   height: 100vh;
   box-sizing: border-box;
@@ -88,19 +88,20 @@ body {
   margin: 8px;
 }
 .messages{
-  height: 86vh;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
   max-width: 100%;
   overflow-y: scroll;
-  background-color: #eee;
+  height: 100%;
 
 }
 .main-messages{
   width: 100%;
   max-width: 100%;
-  position: relative;
-  top: 50px;
+  /* position: relative; */
+  margin-top: 50px;
   height: 100%;
-  background-color: var(--chat-bgcolor);
 }
 #message{
   border: 1px solid darkgray;
@@ -159,13 +160,18 @@ body {
 .left{
   width: 50%;
   max-width: 100%;
-  margin: 8px 0 8px 50%;
+  margin: 8px 50% 8px 0;
 }
 
 .inputs{
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+#user{
+  cursor: pointer;
+
 }
 @media(max-width:699px){
   .loginForm{

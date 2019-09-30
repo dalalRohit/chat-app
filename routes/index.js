@@ -13,11 +13,18 @@ admin.initializeApp({
 });
 var database = admin.database();
 var ref = database.ref('/users');
+var msgRef = database.ref('/messages')
 
 const getConnectedUsers = async () => {
   let snapshot = await ref.once('value');
   let users = snapshot.val();
   return users;
+}
+
+const getAllMessages = async () => {
+  let snapshot = await msgRef.once('value');
+  let messages = snapshot.val();
+  return messages;
 }
 
 //to load FIREBASE database with admin user
@@ -33,27 +40,65 @@ const loadDatabase = () => {
   }
   ref.set(admin);
 }
+const loadMessages = () => {
+  var msgs =
+  {
+    admin_admin: [
+      {
+        id: uuid(),
+        username: 'admin',
+        text: "Hello,I'm the Admin of this app!",
+        sent: moment().format('lll')
+      },
+      {
+        id: uuid(),
+        username: 'admin',
+        text: "Hello,I'm the Admin of this app![2]",
+        sent: moment().format('lll')
+      }
+    ],
+    rohit_dalal: [
+      {
+        id: uuid(),
+        username: 'rohit',
+        text: "Hello,I'm the rohit of this app!",
+        sent: moment().format('lll')
+      },
+      {
+        id: uuid(),
+        username: 'rohit',
+        text: "Hello,I'm the rohit of this app![2]",
+        sent: moment().format('lll')
+      }
+    ]
+  }
 
+  msgRef.set(msgs);
+}
 //to remove all users from FIREBASE except admin
 const emptyDatabase = () => {
   ref.remove()
   loadDatabase();
 }
 
+
 // loadDatabase();
 // emptyDatabase();
+// loadMessages();
 
 // ***************** FIREBASE => END ******************************
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('login', {
-    title: "ChatApp | Login"
+    pageTitle: "ChatApp | Login"
   });
 });
 
 router.get('/chat', (req, res, next) => {
-  res.render('chat')
+  res.render('chat', {
+    pageTitle: 'ChatApp | Chat'
+  })
 })
 
 router.post('/verify', async (req, res) => {
@@ -86,25 +131,24 @@ router.post('/verify', async (req, res) => {
 router.post('/logout', async (req, res) => {
   let x = await getConnectedUsers();
   let loggedUser = req.body.name;
-  if (req.body.socketId) {
-    Object.keys(x).map((user) => {
-      if (x[user].socketId === req.body.socketId) {
-        delete x[user];
-      }
-    })
-  }
   Object.keys(x).map((user) => {
     if (loggedUser === user) {
       delete x[user];
     }
   })
   ref.set(x);
-  res.send(`${loggedUser} logged out!`)
+  res.send({
+    info: `${loggedUser} logged out!`,
+    users: x
+  })
 
 })
 
-router.get('/getData', (req, res) => {
-  res.send('DATA');
-})
-
-module.exports = { indexRouter: router, getConnectedUsers, ref };
+module.exports = {
+  indexRouter: router,
+  getConnectedUsers,
+  getAllMessages,
+  ref,
+  msgRef,
+  database
+};

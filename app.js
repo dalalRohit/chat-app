@@ -9,7 +9,7 @@ var expressLayouts = require('express-ejs-layouts');
 var axios = require('axios');
 var { createMsg, getUserBySocketId } = require('./utils/functions');
 
-var { indexRouter, getConnectedUsers, ref } = require('./routes/index');
+var { indexRouter, getConnectedUsers, msgRef, getAllMessages, database } = require('./routes/index');
 
 var app = express();
 // parse application/x-www-form-urlencoded
@@ -63,37 +63,40 @@ io.on('connection', (socket) => {
   socket.emit('MESSAGE', createMsg('Welcome to ChatApp!', 'Admin'));
 
   socket.on('USER_CONNECTED', async (user) => {
-    let users = await getConnectedUsers();
-    let usernames = Object.keys(users);
     socket.broadcast.emit('MESSAGE', createMsg(`${user.name} has joined the chat!`, 'Admin'));
-    io.emit('UPDATE_USERS', usernames);
-
   })
 
-  socket.on('NEW_MSG', (msg, callback) => {
+  socket.on('NEW_MSG', async (msg, callback) => {
     let message = createMsg(msg.text, msg.sender);
-    // message['float'] = 09;
-    //if getUserBySocketId()===msg.sender
+    // console.log(message);
+    // let messages = await getAllMessages();
+    // let users = await getConnectedUsers();
+    // let usernames = Object.keys(messages).map((user) => user);
+    // // database.ref(`/messages/rohit`)
+    // //   .push({
+    // //     id: 'asdjoisaidnlkan',
+    // //     username: 'ashish',
+    // //     text: "Hello,I'm the ashish of this app![2]",
+    // //     sent: 'asdnasdlkda'
+    // //   })
+    // usernames.map((user) => {
+    //   if (user === msg.sender) {
+    //     database.ref(`/messages/${user}`)
+    //       .push(message)
+    //   }
+    // })
+
     io.emit('MESSAGE', message);
 
     callback();
   })
 
-  socket.on('disconnect', async () => {
-    let users = await getConnectedUsers();
-    // Object.keys(users)
-    //   .map((user) => {
-    //     if (users[user].socketId === socket.id) {
-    //       console.log(user.name);
-    //       // io.emit('MESSAGE', createMsg(`${user.name} has left the chat!`, 'Admin'))
-    //       delete users[user];
-    //     }
-    //   })
-    // console.log('After refresh/ctrl+w', users);
-    // ref.set(users);
-    // io.emit('MESSAGE', createMsg(`user has left the chat!`, 'Admin'))
 
+  socket.on('disconnect', async () => {
+    // let users = await getConnectedUsers();
   })
+
+
 })
 
 

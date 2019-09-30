@@ -22,7 +22,7 @@ const createMsg = (msg, sender) => {
     return {
         text: msg,
         sender,
-        createdAt: moment().format('LT')
+        createdAt: moment().format('LT'),
     }
 }
 const verifyUser = (list, newUser) => {
